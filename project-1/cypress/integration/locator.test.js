@@ -36,4 +36,22 @@ describe("Locators", () => {
     cy.get("[data-cy='btn-id-1']")
     cy.getByTestId("btn-id-1")
   })
+
+  it.only("locating elements with contains", () => {
+    cy.log("get all elements by unique text contains")
+    cy.contains("Unique Text")
+
+    cy.log("get all elements by not unique text contains")
+    // will only bring single result the first find
+    cy.contains("Not Unique Text")
+
+    cy.log("get all elements with type and contains")
+    cy.contains("[type='submit']", "Not Unique Text")
+
+    cy.log(
+      "get all elements with get command and then filter with contain command"
+    )
+
+    cy.get("[type='submit']").contains("Not Unique Text")
+  })
 })
