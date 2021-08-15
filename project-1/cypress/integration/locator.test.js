@@ -1,6 +1,6 @@
 /// <reference types="cypress"/>
 
-describe("Locators", () => {
+describe.skip("Locators", () => {
   beforeEach(() => {
     cy.visit("/elements")
   })
@@ -8,6 +8,9 @@ describe("Locators", () => {
   it("locating elements with get", () => {
     cy.log("get all the elements by tag name")
     cy.get("button")
+
+    cy.log("get only the first element in an array by tag name")
+    cy.get("button").first()
 
     cy.log("get all the elements by classNames")
     cy.get(".btn-with-class")
@@ -37,21 +40,33 @@ describe("Locators", () => {
     cy.getByTestId("btn-id-1")
   })
 
-  it.only("locating elements with contains", () => {
-    cy.log("get all elements by unique text contains")
+  it("locating element with contains", () => {
+    cy.log("get element by unique text contains")
     cy.contains("Unique Text")
 
-    cy.log("get all elements by not unique text contains")
+    cy.log("get element by not unique text contains")
     // will only bring single result the first find
     cy.contains("Not Unique Text")
 
-    cy.log("get all elements with type and contains")
+    cy.log("get element with type and contains")
     cy.contains("[type='submit']", "Not Unique Text")
+
+    cy.log("get with element and then look for child Element with contains")
+    cy.contains("form", "Not Unique Text")
 
     cy.log(
       "get all elements with get command and then filter with contain command"
     )
 
     cy.get("[type='submit']").contains("Not Unique Text")
+  })
+
+  it("locating elements or element with find", () => {
+    // find only used to find the child element by chaining only!!!
+    cy.log("get parent and then find the child elements")
+    cy.get("#form-1").find("button")
+
+    cy.log("get parent and then find the specific child element based on class")
+    cy.get("#form-1").find(".btn-1")
   })
 })
